@@ -3,19 +3,297 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GymFlow</title>
-<link rel="stylesheet" href="style.css">
+<title>GymFlow — Gym workout log &amp; tracker</title>
+<meta name="description" content="Plan workouts, log every set and see your progress. No account, your data stays on your phone. Free on Google Play.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GymFlow — Gym workout log &amp; tracker">
+<meta property="og:description" content="Plan workouts, log every set and see your progress. No account, your data stays on your phone.">
+<meta property="og:image" content="https://khoatn1993.github.io/img/og.jpg">
+<meta property="og:url" content="https://khoatn1993.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0e0f11">
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0e0f11;
+  --surface: #17191c;
+  --line: #26292e;
+  --fg: #eef0f2;
+  --muted: #a3a8b0;
+  --lime: #c6f432;
+  --on-lime: #0e0f11;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 17px/1.6 "Barlow", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--lime); }
+img { display: block; max-width: 100%; height: auto; }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+h1, h2, h3, .brand { font-family: "Barlow Condensed", "Barlow", sans-serif; letter-spacing: 0.01em; }
+
+header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; font-size: 1.4rem; font-weight: 700; color: var(--fg); text-decoration: none; }
+.brand img { width: 32px; height: 32px; border-radius: 8px; }
+.lang-switch { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.lang-switch button {
+  background: none; border: 0; color: var(--muted); font: 600 0.85rem "Barlow", sans-serif;
+  padding: 6px 12px; cursor: pointer;
+}
+.lang-switch button[aria-pressed="true"] { background: var(--lime); color: var(--on-lime); }
+
+.hero { padding: 40px 0 56px; }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center; }
+.eyebrow { color: var(--lime); font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.8rem; margin: 0 0 12px; }
+.hero h1 { font-size: clamp(2.6rem, 6vw, 4.2rem); line-height: 1.02; margin: 0 0 18px; text-transform: uppercase; }
+.hero h1 span { color: var(--lime); }
+.lead { font-size: 1.15rem; color: var(--muted); margin: 0 0 28px; max-width: 34em; }
+.cta {
+  display: inline-flex; align-items: center; gap: 12px;
+  background: var(--lime); color: var(--on-lime); text-decoration: none;
+  padding: 14px 24px; border-radius: 14px; font-weight: 600; font-size: 1.05rem;
+}
+.cta svg { width: 22px; height: 22px; flex: none; }
+.cta:hover { filter: brightness(1.06); }
+.cta-note { color: var(--muted); font-size: 0.9rem; margin: 12px 0 0; }
+.phone {
+  justify-self: center; width: min(300px, 80vw);
+  border-radius: 34px; padding: 8px; background: #000;
+  box-shadow: 0 0 0 1px var(--line), 0 30px 80px rgba(198, 244, 50, 0.12);
+}
+.phone img { width: 100%; border-radius: 26px; }
+
+.pillars { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 28px 0; }
+.pillars ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.pillars strong { display: block; font-family: "Barlow Condensed", sans-serif; font-size: 1.3rem; text-transform: uppercase; }
+.pillars span { color: var(--muted); font-size: 0.95rem; }
+
+section { padding: 64px 0; }
+section.tight { padding-top: 0; }
+section > .wrap > h2 { font-size: clamp(2rem, 4vw, 2.8rem); text-transform: uppercase; margin: 0 0 8px; line-height: 1.05; }
+.sub { color: var(--muted); margin: 0 0 36px; max-width: 40em; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
+.card h3 { font-size: 1.35rem; margin: 0 0 6px; text-transform: uppercase; }
+.card p { margin: 0; color: var(--muted); font-size: 0.98rem; }
+.badge { display: inline-block; font: 600 0.7rem "Barlow", sans-serif; text-transform: uppercase; letter-spacing: 0.08em; color: var(--on-lime); background: var(--lime); border-radius: 6px; padding: 2px 7px; margin-left: 8px; vertical-align: 3px; }
+
+.gallery { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 16px 16px; margin: 0 -16px; }
+.gallery figure { flex: 0 0 auto; width: 220px; margin: 0; scroll-snap-align: start; }
+.gallery img { width: 100%; border-radius: 18px; border: 1px solid var(--line); }
+.gallery figcaption { color: var(--muted); font-size: 0.9rem; margin-top: 8px; text-align: center; }
+
+.plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.plans .card ul { margin: 12px 0 0; padding-left: 1.1rem; color: var(--muted); }
+.plans .card li { margin: 4px 0; }
+.plans .premium { border-color: var(--lime); }
+.fine { color: var(--muted); font-size: 0.88rem; margin-top: 16px; }
+
+details { border-bottom: 1px solid var(--line); padding: 16px 0; }
+summary { cursor: pointer; font-weight: 600; font-size: 1.05rem; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--lime); font-size: 1.3rem; line-height: 1; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); margin: 10px 0 0; }
+
+.final { text-align: center; }
+.final h2 { margin-bottom: 20px !important; }
+footer { border-top: 1px solid var(--line); padding: 28px 0 40px; color: var(--muted); font-size: 0.92rem; }
+footer .wrap { display: flex; flex-wrap: wrap; gap: 12px 24px; justify-content: space-between; }
+footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+footer a { color: var(--fg); text-decoration: none; }
+footer a:hover { color: var(--lime); }
+
+@media (max-width: 820px) {
+  .hero { padding-top: 16px; }
+  .hero .wrap { grid-template-columns: 1fr; gap: 40px; }
+  .grid { grid-template-columns: 1fr 1fr; }
+  .pillars ul { grid-template-columns: 1fr; gap: 14px; }
+}
+@media (max-width: 560px) {
+  .grid, .plans { grid-template-columns: 1fr; }
+  section { padding: 48px 0; }
+  .gallery figure { width: 180px; }
+}
+</style>
 </head>
 <body>
+
+<header>
+  <div class="wrap">
+    <a class="brand" href="#"><img src="img/icon-192.png" alt="">GymFlow</a>
+    <div class="lang-switch" role="group" aria-label="Language">
+      <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-set-lang="vi" aria-pressed="false">VI</button>
+    </div>
+  </div>
+</header>
+
 <main>
-<h1>GymFlow</h1>
-<p class="meta">Plan workouts, log every set, see your progress. · Lập kế hoạch, ghi từng hiệp, thấy rõ tiến bộ.</p>
-<ul class="links">
-<li><a href="privacy.html">Privacy Policy</a> · <a href="privacy.html#vi">Chính sách quyền riêng tư</a></li>
-<li><a href="terms.html">Terms of Use</a> · <a href="terms.html#vi">Điều khoản sử dụng</a></li>
-<li>Support · Hỗ trợ: <a href="mailto:gymflow.app.help@gmail.com">gymflow.app.help@gmail.com</a></li>
-</ul>
-<p class="meta">© 2026 Tran Nguyen Khoa</p>
+<div class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow" data-vi="Nhật ký tập gym">Gym workout log</p>
+      <h1 data-vi-html="Ghi từng hiệp.<br><span>Thấy rõ tiến bộ.</span>">Log every set.<br><span>See every gain.</span></h1>
+      <p class="lead" data-vi="GymFlow giúp bạn lập kế hoạch buổi tập, ghi lại từng hiệp chỉ với một chạm và theo dõi sức mạnh tăng lên qua từng tuần. Không cần tài khoản, dữ liệu nằm trên điện thoại của bạn.">GymFlow helps you plan your workouts, log each set with one tap and watch your strength grow week after week. No account needed, and your data stays on your phone.</p>
+      <a class="cta" href="https://play.google.com/store/apps/details?id=com.fitness.personal&amp;referrer=utm_source%3Dwebsite%26utm_campaign%3Dhero">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.2 2.4a1.5 1.5 0 0 0-.7 1.3v16.6c0 .55.28 1.04.7 1.3l9.4-9.6-9.4-9.6Zm10.6 8.4 2.6-2.7L6.6 1.9l8.2 8.9Zm0 2.4-8.2 8.9 10.8-6.2-2.6-2.7Zm4-4.3-2.9 3.1 2.9 3.1 2.6-1.5c.8-.47.8-1.63 0-2.1l-2.6-1.6Z"/></svg>
+        <span data-vi="Tải miễn phí trên Google Play">Get it free on Google Play</span>
+      </a>
+      <p class="cta-note" data-vi="Android · Tiếng Việt &amp; English · Không cần đăng ký">Android · English &amp; Vietnamese · No sign-up</p>
+    </div>
+    <div class="phone"><img src="img/01-session.jpg" alt="Logging a bench press set in GymFlow" width="540" height="1080"></div>
+  </div>
+</div>
+
+<div class="pillars">
+  <div class="wrap">
+    <ul>
+      <li><strong data-vi="Không tài khoản">No account</strong><span data-vi="Mở app là tập. Không email, không mật khẩu.">Open the app and train. No email, no password.</span></li>
+      <li><strong data-vi="Dữ liệu của bạn">Your data, your phone</strong><span data-vi="Lưu trên máy, không có server. Xuất file sao lưu bất cứ lúc nào.">Stored on device, no server. Export a backup any time.</span></li>
+      <li><strong data-vi="Miễn phí để ghi">Free to log</strong><span data-vi="Kế hoạch, buổi tập và lịch sử đều miễn phí.">Plans, workouts and history are all free.</span></li>
+    </ul>
+  </div>
+</div>
+
+<section id="features">
+  <div class="wrap">
+    <h2 data-vi="Mọi thứ cho buổi tập">Built for the gym floor</h2>
+    <p class="sub" data-vi="Thiết kế để dùng giữa các hiệp: chữ to, ít chạm, luôn thấy lần trước bạn đã làm gì.">Made to use between sets: big type, few taps, and last time's numbers always in view.</p>
+    <div class="grid">
+      <div class="card"><h3 data-vi="Kế hoạch tập">Workout plans</h3><p data-vi="Tự tạo hoặc bắt đầu từ mẫu có sẵn. Đặt số hiệp, số lần, thời gian nghỉ và superset.">Build your own or start from a template. Set sets, reps, rest and supersets.</p></div>
+      <div class="card"><h3 data-vi="Ghi một chạm">One-tap logging</h3><p data-vi="Số liệu lần trước nằm ngay cạnh từng hiệp. Có hiệp khởi động, RPE và ghi chú.">Last session's numbers right beside each set. Warm-up sets, RPE and notes included.</p></div>
+      <div class="card"><h3 data-vi="Đồng hồ nghỉ">Rest timer</h3><p data-vi="Tự chạy sau mỗi hiệp và báo khi hết giờ nghỉ, kể cả khi app chạy nền.">Starts after every set and alerts you when rest is over, even in the background.</p></div>
+      <div class="card"><h3 data-vi="Tính bánh tạ">Plate calculator</h3><p data-vi="Biết ngay cần lắp bánh tạ nào mỗi bên thanh đòn.">See exactly which plates go on each side of the bar.</p></div>
+      <div class="card"><h3 data-vi="Thư viện bài tập">Exercise library</h3><p data-vi="Hình minh hoạ và hướng dẫn từng bài, theo nhóm cơ và dụng cụ.">Illustrations and how-to guides, by muscle and equipment.</p></div>
+      <div class="card"><h3 data-vi-html="Lịch sử &amp; nhắc tập">History &amp; reminders</h3><p data-vi="Xem lại mọi buổi tập và đặt lời nhắc hằng tuần.">Every workout you've done, plus weekly workout reminders.</p></div>
+      <div class="card"><h3><span data-vi="Biểu đồ tiến bộ">Progress charts</span><span class="badge">Premium</span></h3><p data-vi="Theo dõi mức tạ, khối lượng và 1RM ước tính của từng bài.">Track weight, volume and estimated 1RM for every exercise.</p></div>
+      <div class="card"><h3><span data-vi="Kỷ lục cá nhân">Personal records</span><span class="badge">Premium</span></h3><p data-vi="Mọi kỷ lục bạn đã lập, cùng hoạt động tập luyện và cân nặng cơ thể.">Every record you've set, plus training activity and body weight.</p></div>
+      <div class="card"><h3><span data-vi="Gợi ý mức tạ">Weight suggestions</span><span class="badge">Premium</span></h3><p data-vi="Biết khi nào nên tăng tạ, dựa trên buổi tập trước.">Know when to add weight, based on your last session.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="screens" class="tight">
+  <div class="wrap">
+    <h2 data-vi="Xem trước">Take a look</h2>
+    <p class="sub" data-vi="Ảnh chụp từ app (giao diện tiếng Anh).">Screens from the app.</p>
+    <div class="gallery">
+      <figure><img src="img/01-session.jpg" alt="" loading="lazy" width="540" height="1080"><figcaption data-vi="Ghi hiệp">Log a set</figcaption></figure>
+      <figure><img src="img/02-session-rest.jpg" alt="" loading="lazy" width="540" height="1080"><figcaption data-vi="Nghỉ giữa hiệp">Rest timer</figcaption></figure>
+      <figure><img src="img/05-plans.jpg" alt="" loading="lazy" width="540" height="1080"><figcaption data-vi="Kế hoạch">Plans</figcaption></figure>
+      <figure><img src="img/03-progress-chart.jpg" alt="" loading="lazy" width="540" height="1080"><figcaption data-vi="Biểu đồ">Progress chart</figcaption></figure>
+      <figure><img src="img/04-progress-records.jpg" alt="" loading="lazy" width="540" height="1080"><figcaption data-vi="Kỷ lục">Records</figcaption></figure>
+      <figure><img src="img/06-history.jpg" alt="" loading="lazy" width="540" height="1080"><figcaption data-vi="Lịch sử">History</figcaption></figure>
+      <figure><img src="img/07-guide.jpg" alt="" loading="lazy" width="540" height="1080"><figcaption data-vi="Hướng dẫn bài tập">Exercise guide</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="pricing" class="tight">
+  <div class="wrap">
+    <h2 data-vi="Miễn phí hay Premium">Free or Premium</h2>
+    <p class="sub" data-vi="Bản miễn phí đủ để ghi mọi buổi tập. Premium dành cho ai muốn xem sâu hơn.">The free version logs every workout. Premium is for when you want to dig deeper.</p>
+    <div class="plans">
+      <div class="card">
+        <h3 data-vi="Miễn phí">Free</h3>
+        <ul>
+          <li data-vi="Kế hoạch tập không giới hạn, mẫu có sẵn">Unlimited plans and templates</li>
+          <li data-vi="Ghi buổi tập, đồng hồ nghỉ, tính bánh tạ">Workout logging, rest timer, plate calculator</li>
+          <li data-vi="Thư viện bài tập, lịch sử, nhắc tập">Exercise library, history, reminders</li>
+          <li data-vi="Sao lưu, khôi phục, xuất CSV">Backup, restore and CSV export</li>
+          <li data-vi="Có quảng cáo">Shows ads</li>
+        </ul>
+      </div>
+      <div class="card premium">
+        <h3>Premium</h3>
+        <ul>
+          <li data-vi="Mọi thứ của bản miễn phí, không quảng cáo">Everything in Free, without ads</li>
+          <li data-vi="Tab Tiến độ: biểu đồ, kỷ lục, hoạt động, cân nặng">Progress tab: charts, records, activity, body weight</li>
+          <li data-vi="Gợi ý mức tạ khi tập">Weight suggestions during workouts</li>
+          <li data-vi="Theo tháng, theo năm (dùng thử 7 ngày) hoặc trọn đời">Monthly, yearly (7-day free trial) or lifetime</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fine" data-vi="Giá hiển thị trong app và trên Google Play theo khu vực của bạn. Gói thuê bao tự gia hạn, huỷ bất cứ lúc nào trong Google Play.">Prices are shown in the app and on Google Play for your region. Subscriptions renew automatically; cancel any time in Google Play.</p>
+  </div>
+</section>
+
+<section id="faq" class="tight">
+  <div class="wrap">
+    <h2 data-vi="Câu hỏi thường gặp">FAQ</h2>
+    <details><summary data-vi="Có cần tạo tài khoản không?">Do I need an account?</summary><p data-vi="Không. Mở app là dùng được ngay.">No. Open the app and start training.</p></details>
+    <details><summary data-vi="Dữ liệu của tôi được lưu ở đâu?">Where is my data stored?</summary><p data-vi="Chỉ trên điện thoại của bạn. GymFlow không có server và không đồng bộ dữ liệu tập luyện đi đâu cả. Xem Chính sách quyền riêng tư để biết chi tiết.">Only on your phone. GymFlow has no server and doesn't sync your training data anywhere. See the Privacy Policy for details.</p></details>
+    <details><summary data-vi="Đổi điện thoại thì sao?">What if I change phones?</summary><p data-vi="Vào Cài đặt, xuất file sao lưu, chuyển file sang máy mới rồi khôi phục. Premium được lấy lại bằng nút Khôi phục giao dịch với cùng tài khoản Google.">Export a backup file from Settings, move it to the new phone and restore it. Premium comes back with Restore purchases on the same Google account.</p></details>
+    <details><summary data-vi="Có bản iPhone không?">Is there an iPhone version?</summary><p data-vi="Hiện GymFlow chỉ có trên Android. Bản iOS đang được lên kế hoạch.">GymFlow is on Android for now. An iOS version is planned.</p></details>
+    <details><summary data-vi="Làm sao huỷ gói Premium?">How do I cancel Premium?</summary><p data-vi="Trong Google Play → Thanh toán và gói thuê bao → Gói thuê bao. Premium vẫn dùng được đến hết kỳ đã trả tiền.">In Google Play → Payments &amp; subscriptions → Subscriptions. Premium stays active until the end of the period you paid for.</p></details>
+  </div>
+</section>
+
+<section class="final tight">
+  <div class="wrap">
+    <h2 data-vi="Bắt đầu buổi tập tiếp theo">Start your next workout</h2>
+    <a class="cta" href="https://play.google.com/store/apps/details?id=com.fitness.personal&amp;referrer=utm_source%3Dwebsite%26utm_campaign%3Dfooter">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M4.2 2.4a1.5 1.5 0 0 0-.7 1.3v16.6c0 .55.28 1.04.7 1.3l9.4-9.6-9.4-9.6Zm10.6 8.4 2.6-2.7L6.6 1.9l8.2 8.9Zm0 2.4-8.2 8.9 10.8-6.2-2.6-2.7Zm4-4.3-2.9 3.1 2.9 3.1 2.6-1.5c.8-.47.8-1.63 0-2.1l-2.6-1.6Z"/></svg>
+      <span data-vi="Tải miễn phí trên Google Play">Get it free on Google Play</span>
+    </a>
+  </div>
+</section>
 </main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Tran Nguyen Khoa</span>
+    <nav>
+      <a id="privacy-link" href="privacy.html" data-vi="Quyền riêng tư">Privacy</a>
+      <a id="terms-link" href="terms.html" data-vi="Điều khoản">Terms</a>
+      <a href="mailto:gymflow.app.help@gmail.com" data-vi="Hỗ trợ">Support</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var nodes = document.querySelectorAll('[data-vi], [data-vi-html]');
+  nodes.forEach(function (el) { el.dataset.en = el.innerHTML; });
+
+  function apply(lang) {
+    nodes.forEach(function (el) {
+      if (lang === 'vi') {
+        if (el.dataset.viHtml) el.innerHTML = el.dataset.viHtml;
+        else el.textContent = el.dataset.vi;
+      } else {
+        el.innerHTML = el.dataset.en;
+      }
+    });
+    document.documentElement.lang = lang;
+    document.getElementById('privacy-link').href = lang === 'vi' ? 'privacy.html#vi' : 'privacy.html';
+    document.getElementById('terms-link').href = lang === 'vi' ? 'terms.html#vi' : 'terms.html';
+    document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.dataset.setLang === lang));
+    });
+    try { localStorage.setItem('gymflow-lang', lang); } catch (e) {}
+  }
+
+  var saved = null;
+  try { saved = localStorage.getItem('gymflow-lang'); } catch (e) {}
+  var param = new URLSearchParams(location.search).get('lang');
+  var initial = param || saved || ((navigator.language || '').toLowerCase().indexOf('vi') === 0 ? 'vi' : 'en');
+  if (initial === 'vi') apply('vi');
+
+  document.querySelectorAll('[data-set-lang]').forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.dataset.setLang); });
+  });
+})();
+</script>
 </body>
 </html>
