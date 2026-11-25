@@ -85,6 +85,7 @@ section > .wrap > h2 { font-size: clamp(2rem, 4vw, 2.8rem); text-transform: uppe
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
 .card h3 { font-size: 1.35rem; margin: 0 0 6px; text-transform: uppercase; }
 .card p { margin: 0; color: var(--muted); font-size: 0.98rem; }
+.card-link { display: inline-block; margin-top: 10px; font-weight: 600; }
 .badge { display: inline-block; font: 600 0.7rem "Barlow", sans-serif; text-transform: uppercase; letter-spacing: 0.08em; color: var(--on-lime); background: var(--lime); border-radius: 6px; padding: 2px 7px; margin-left: 8px; vertical-align: 3px; }
 
 .gallery { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 16px 16px; margin: 0 -16px; }
@@ -174,7 +175,7 @@ footer a:hover { color: var(--lime); }
       <div class="card"><h3 data-vi="Ghi một chạm">One-tap logging</h3><p data-vi="Số liệu lần trước nằm ngay cạnh từng hiệp. Có hiệp khởi động, RPE và ghi chú.">Last session's numbers right beside each set. Warm-up sets, RPE and notes included.</p></div>
       <div class="card"><h3 data-vi="Đồng hồ nghỉ">Rest timer</h3><p data-vi="Tự chạy sau mỗi hiệp và báo khi hết giờ nghỉ, kể cả khi app chạy nền.">Starts after every set and alerts you when rest is over, even in the background.</p></div>
       <div class="card"><h3 data-vi="Tính bánh tạ">Plate calculator</h3><p data-vi="Biết ngay cần lắp bánh tạ nào mỗi bên thanh đòn.">See exactly which plates go on each side of the bar.</p></div>
-      <div class="card"><h3 data-vi="Thư viện bài tập">Exercise library</h3><p data-vi="Hình minh hoạ và hướng dẫn từng bài, theo nhóm cơ và dụng cụ.">Illustrations and how-to guides, by muscle and equipment.</p></div>
+      <div class="card"><h3 data-vi="Thư viện bài tập">Exercise library</h3><p data-vi="Hình minh hoạ và hướng dẫn từng bài, theo nhóm cơ và dụng cụ.">Illustrations and how-to guides, by muscle and equipment.</p><a class="card-link library-link" href="https://gymflowlog.pages.dev/" data-vi="Xem thư viện trên web →">Browse it on the web →</a></div>
       <div class="card"><h3 data-vi-html="Lịch sử &amp; nhắc tập">History &amp; reminders</h3><p data-vi="Xem lại mọi buổi tập và đặt lời nhắc hằng tuần.">Every workout you've done, plus weekly workout reminders.</p></div>
       <div class="card"><h3><span data-vi="Biểu đồ tiến bộ">Progress charts</span><span class="badge">Premium</span></h3><p data-vi="Theo dõi mức tạ, khối lượng và 1RM ước tính của từng bài.">Track weight, volume and estimated 1RM for every exercise.</p></div>
       <div class="card"><h3><span data-vi="Kỷ lục cá nhân">Personal records</span><span class="badge">Premium</span></h3><p data-vi="Mọi kỷ lục bạn đã lập, cùng hoạt động tập luyện và cân nặng cơ thể.">Every record you've set, plus training activity and body weight.</p></div>
@@ -256,6 +257,7 @@ footer a:hover { color: var(--lime); }
     <nav>
       <a id="privacy-link" href="privacy.html" data-vi="Quyền riêng tư">Privacy</a>
       <a id="terms-link" href="terms.html" data-vi="Điều khoản">Terms</a>
+      <a class="library-link" href="https://gymflowlog.pages.dev/" data-vi="Thư viện bài tập">Exercise library</a>
       <a href="mailto:gymflow.app.help@gmail.com" data-vi="Hỗ trợ">Support</a>
     </nav>
   </div>
@@ -278,6 +280,9 @@ footer a:hover { color: var(--lime); }
     document.documentElement.lang = lang;
     document.getElementById('privacy-link').href = lang === 'vi' ? 'privacy.html#vi' : 'privacy.html';
     document.getElementById('terms-link').href = lang === 'vi' ? 'terms.html#vi' : 'terms.html';
+    document.querySelectorAll('.library-link').forEach(function (a) {
+      a.href = lang === 'vi' ? 'https://gymflowlog.pages.dev/vi/' : 'https://gymflowlog.pages.dev/';
+    });
     document.querySelectorAll('[data-set-lang]').forEach(function (b) {
       b.setAttribute('aria-pressed', String(b.dataset.setLang === lang));
     });
